@@ -50,6 +50,38 @@ A simplified, easy-to-use dashboard for monitoring GitHub Actions workflows. Per
    - Dashboard: http://localhost:3000
    - API: http://localhost:3001
 
+### **Container Management Commands**
+
+```bash
+# Start containers (build if needed)
+docker-compose up --build
+
+# Start containers in background
+docker-compose up -d
+
+# Stop containers
+docker-compose down
+
+# Stop and remove volumes
+docker-compose down -v
+
+# Stop and remove images
+docker-compose down --rmi all
+
+# View container logs
+docker-compose logs
+
+# View specific service logs
+docker-compose logs backend
+docker-compose logs frontend
+
+# Restart containers
+docker-compose restart
+
+# Rebuild and restart specific service
+docker-compose up --build backend
+```
+
 ### Option 2: Local Development
 
 1. **Clone and setup backend**
@@ -184,7 +216,28 @@ Plus metrics like:
 
 **Docker issues**
 - Make sure Docker is running
-- Try `docker-compose down` then `docker-compose up --build`
+- Stop containers: `docker-compose down`
+- Rebuild and start: `docker-compose up --build`
+- Check container status: `docker-compose ps`
+- View logs: `docker-compose logs`
+
+**Permission issues (macOS/Linux)**
+```bash
+# If you get permission denied errors
+sudo chown -R $USER:$USER .
+chmod -R 755 .
+```
+
+**Port conflicts**
+```bash
+# If ports 3000 or 3001 are in use
+docker-compose down
+# Kill processes using the ports
+lsof -ti:3000 | xargs kill -9
+lsof -ti:3001 | xargs kill -9
+# Restart containers
+docker-compose up --build
+```
 
 ### Debug Mode
 Set environment variables for more detailed logging:

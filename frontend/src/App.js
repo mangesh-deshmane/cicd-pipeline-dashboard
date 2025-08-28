@@ -13,6 +13,7 @@ function App() {
   const [workflowRuns, setWorkflowRuns] = useState([]);
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [message, setMessage] = useState('');
 
   // WebSocket connection
   useEffect(() => {
@@ -39,6 +40,12 @@ function App() {
     return () => socket.disconnect();
   }, [selectedRepo]);
 
+  // Show message helper
+  const showMessage = (msg, type = 'info') => {
+    setMessage(msg);
+    setTimeout(() => setMessage(''), 3000);
+  };
+
   // Fetch repositories
   const fetchRepositories = async () => {
     try {
@@ -46,6 +53,7 @@ function App() {
       setRepositories(response.data);
     } catch (error) {
       console.error('Error fetching repositories:', error);
+      showMessage('Error fetching repositories', 'error');
     }
   };
 
@@ -56,6 +64,7 @@ function App() {
       setMetrics(response.data);
     } catch (error) {
       console.error('Error fetching metrics:', error);
+      showMessage('Error fetching metrics', 'error');
     }
   };
 
@@ -66,21 +75,26 @@ function App() {
       setWorkflowRuns(response.data);
     } catch (error) {
       console.error('Error fetching workflow runs:', error);
+      showMessage('Error fetching workflow runs', 'error');
     }
   };
 
   // Add repository
   const addRepository = async (e) => {
     e.preventDefault();
-    if (!newRepo.name || !newRepo.owner) return;
+    if (!newRepo.name || !newRepo.owner) {
+      showMessage('Please fill in both name and owner', 'error');
+      return;
+    }
 
     try {
       await axios.post(`${API_BASE}/repositories`, newRepo);
       setNewRepo({ name: '', owner: '' });
       fetchRepositories();
+      showMessage('Repository added successfully', 'success');
     } catch (error) {
       console.error('Error adding repository:', error);
-      alert('Error adding repository: ' + error.response?.data?.error);
+      showMessage('Error adding repository: ' + (error.response?.data?.error || error.message), 'error');
     }
   };
 
@@ -93,9 +107,10 @@ function App() {
       if (selectedRepo) {
         fetchWorkflowRuns(selectedRepo.id);
       }
+      showMessage('GitHub data fetched successfully', 'success');
     } catch (error) {
       console.error('Error fetching GitHub data:', error);
-      alert('Error fetching GitHub data: ' + error.response?.data?.error);
+      showMessage('Error fetching GitHub data: ' + (error.response?.data?.error || error.message), 'error');
     } finally {
       setLoading(false);
     }
@@ -138,6 +153,13 @@ function App() {
           </span>
         </div>
       </header>
+
+      {/* Message Display */}
+      {message && (
+        <div className={`message message-info`}>
+          {message}
+        </div>
+      )}
 
       <main className="App-main">
         {/* Metrics Dashboard */}

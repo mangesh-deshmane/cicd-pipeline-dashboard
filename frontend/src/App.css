@@ -21,6 +21,22 @@
   opacity: 0.9;
 }
 
+/* Message Display */
+.message {
+  padding: 10px 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message-info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
 .App-main {
   max-width: 1200px;
   margin: 0 auto;
