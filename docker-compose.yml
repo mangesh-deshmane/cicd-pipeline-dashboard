@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Python FastAPI Backend
   cicd-dashboard:
     build: .
     ports:
@@ -28,6 +29,45 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  # Node.js Backend (Alternative implementation)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: simple-cicd-backend
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    restart: unless-stopped
+    command: npm run dev
+    profiles:
+      - nodejs
+
+  # React Frontend (Alternative implementation)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: simple-cicd-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+    restart: unless-stopped
+    profiles:
+      - nodejs
 
   # Optional: PostgreSQL for production
   postgres:

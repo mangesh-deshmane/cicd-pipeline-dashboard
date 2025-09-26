@@ -1,0 +1,304 @@
+.App {
+  text-align: center;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.App-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.App-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+}
+
+.connection-status {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Message Display */
+.message {
+  padding: 10px 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message-info {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.App-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Metrics Section */
+.metrics-section {
+  margin-bottom: 40px;
+}
+
+.metrics-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.metric-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-left: 4px solid #667eea;
+}
+
+.metric-card h3 {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Repository Section */
+.repo-section {
+  margin-bottom: 40px;
+}
+
+.repo-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.add-repo-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.add-repo-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 200px;
+}
+
+.add-repo-form button {
+  padding: 10px 20px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.add-repo-form button:hover {
+  background: #5a6fd8;
+}
+
+.repo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.repo-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.repo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.repo-card.selected {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.repo-card h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.repo-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.repo-actions button,
+.repo-actions a {
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  font-size: 12px;
+  transition: all 0.2s;
+  background: white;
+  cursor: pointer;
+}
+
+.repo-actions button:hover,
+.repo-actions a:hover {
+  background: #f0f0f0;
+  border-color: #667eea;
+}
+
+.repo-actions button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Workflow Runs Section */
+.runs-section {
+  margin-bottom: 40px;
+}
+
+.runs-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.no-data {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #666;
+}
+
+.runs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.run-card {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.run-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.run-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.run-icon {
+  font-size: 1.2rem;
+}
+
+.run-name {
+  font-weight: bold;
+  color: #333;
+  flex-grow: 1;
+}
+
+.run-status {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.run-details {
+  display: flex;
+  gap: 20px;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .App-main {
+    padding: 10px;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  
+  .repo-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-repo-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .add-repo-form input {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .run-details {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+/* Loading States */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.metric-card,
+.repo-card,
+.run-card {
+  animation: fadeIn 0.3s ease-out;
+}
