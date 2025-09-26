@@ -21,10 +21,6 @@ class CICDPoller:
         self.github_token = os.getenv("GITHUB_TOKEN")
         self.github_base_url = "https://api.github.com"
         
-        # Jenkins configuration
-        self.jenkins_url = os.getenv("JENKINS_URL")
-        self.jenkins_username = os.getenv("JENKINS_USERNAME")
-        self.jenkins_api_token = os.getenv("JENKINS_API_TOKEN")
         
         # Dashboard API configuration
         self.dashboard_api_url = os.getenv("DASHBOARD_API_URL", "http://localhost:8000")
@@ -135,61 +131,7 @@ class CICDPoller:
         except Exception as e:
             logger.error(f"Failed to process GitHub workflow run {run.get('id')}: {e}")
     
-    async def poll_jenkins(self, job_name: str) -> bool:
-        """Poll Jenkins for recent builds"""
-        if not all([self.jenkins_url, self.jenkins_username, self.jenkins_api_token]):
-            logger.warning("Jenkins credentials not configured, skipping Jenkins polling")
-            return False
-        
-        try:
-            # Get job information
-            job_url = f"{self.jenkins_url}/job/{job_name}/api/json"
-            auth = (self.jenkins_username, self.jenkins_api_token)
-            
-            response = await self.http_client.get(job_url, auth=auth)
-            response.raise_for_status()
-            job_data = response.json()
-            
-            builds = job_data.get("builds", [])
-            logger.info(f"Found {len(builds)} builds for Jenkins job {job_name}")
-            
-            # Get recent builds (last 10)
-            recent_builds = builds[:10]
-            
-            # Process each build
-            for build in recent_builds:
-                await self._process_jenkins_build(job_name, build)
-            
-            return True
-            
-        except Exception as e:
-            logger.error(f"Failed to poll Jenkins for job {job_name}: {e}")
-            return False
     
-    async def _process_jenkins_build(self, job_name: str, build: Dict[str, Any]):
-        """Process a single Jenkins build and send to dashboard API"""
-        try:
-            # Get detailed build information
-            build_number = build.get("number")
-            build_url = f"{self.jenkins_url}/job/{job_name}/{build_number}/api/json"
-            auth = (self.jenkins_username, self.jenkins_api_token)
-            
-            response = await self.http_client.get(build_url, auth=auth)
-            response.raise_for_status()
-            build_data = response.json()
-            
-            # Create webhook payload format
-            webhook_payload = {
-                "name": job_name,
-                "url": f"{self.jenkins_url}/job/{job_name}",
-                "build": build_data
-            }
-            
-            # Send to dashboard API
-            await self._send_webhook_to_dashboard("/api/webhook/jenkins", webhook_payload)
-            
-        except Exception as e:
-            logger.error(f"Failed to process Jenkins build {build.get('number')}: {e}")
     
     async def _send_webhook_to_dashboard(self, endpoint: str, payload: Dict[str, Any]) -> bool:
         """Send webhook payload to dashboard API"""
@@ -229,14 +171,6 @@ class CICDPoller:
                 logger.error(f"Failed to poll GitHub Actions for {owner}/{repo}: {e}")
                 continue
         
-        # Jenkins jobs to poll
-        jenkins_jobs = self._get_jenkins_jobs_from_env()
-        for job_name in jenkins_jobs:
-            try:
-                await self.poll_jenkins(job_name)
-            except Exception as e:
-                logger.error(f"Failed to poll Jenkins for job {job_name}: {e}")
-                continue
         
         logger.info("Completed provider polling cycle")
     
@@ -261,21 +195,6 @@ class CICDPoller:
         
         return repos
     
-    def _get_jenkins_jobs_from_env(self) -> List[str]:
-        """Get Jenkins jobs to poll from environment variables"""
-        jobs = []
-        
-        # Check for JENKINS_JOBS environment variable
-        jenkins_jobs_env = os.getenv("JENKINS_JOBS")
-        if jenkins_jobs_env:
-            jobs = [job.strip() for job in jenkins_jobs_env.split(",") if job.strip()]
-        
-        # Fallback to default if none specified
-        if not jobs:
-            default_job = os.getenv("JENKINS_DEFAULT_JOB", "myapp-pipeline")
-            jobs.append(default_job)
-        
-        return jobs
 
 async def main():
     """Main entry point"""

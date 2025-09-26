@@ -14,12 +14,12 @@
 │ ┌─────────────┐ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │
 │ │GitHub Actions│◄┼────┼►│  Webhooks   │ │    │ │  FastAPI    │ │    │ │  Frontend   │ │
 │ └─────────────┘ │    │ │  Handler    │ │    │ │  Backend    │ │    │ │  Dashboard  │ │
-│ ┌─────────────┐ │    │ └─────────────┘ │    │ └─────────────┘ │    │ └─────────────┘ │
-│ │  Jenkins    │◄┼────┼►┌─────────────┐ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │
-│ └─────────────┘ │    │ │   Worker    │ │    │ │ SQLAlchemy  │ │    │ │   Mobile    │ │
-│ ┌─────────────┐ │    │ │  Scheduler  │ │    │ │    ORM      │ │    │ │ Responsive  │ │
-│ │  GitLab CI  │◄┼────┼►└─────────────┘ │    │ └─────────────┘ │    │ └─────────────┘ │
-│ └─────────────┘ │    └─────────────────┘    │ ┌─────────────┐ │    └─────────────────┘
+│                 │    │ └─────────────┘ │    │ └─────────────┘ │    │ └─────────────┘ │
+│                 │    │ ┌─────────────┐ │    │ ┌─────────────┐ │    │ ┌─────────────┐ │
+│                 │    │ │   Worker    │ │    │ │ SQLAlchemy  │ │    │ │   Mobile    │ │
+│                 │    │ │  Scheduler  │ │    │ │    ORM      │ │    │ │ Responsive  │ │
+│                 │    │ └─────────────┘ │    │ └─────────────┘ │    │ └─────────────┘ │
+│                 │    └─────────────────┘    │ ┌─────────────┐ │    └─────────────────┘
 └─────────────────┘                           │ │  Database   │ │
                                               │ │SQLite/PgSQL │ │
 ┌─────────────────┐                           │ └─────────────┘ │    ┌─────────────────┐
@@ -148,7 +148,7 @@
 │  │             │  │   Table     │  │   Table     │  │   Table     │            │
 │  │ • Sessions  │  │             │  │             │  │             │            │
 │  │ • Migrations│  │ • GitHub    │  │ • Status    │  │ • Email     │            │
-│  │ • Connection│  │ • Jenkins   │  │ • Duration  │  │ • Slack     │            │
+│  │ • Connection│  │             │  │ • Duration  │  │ • Slack     │            │
 │  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘            │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -253,7 +253,6 @@ REST API Endpoints:
 │ GET    /api/builds                │ List builds with pagination                 │
 │ GET    /api/builds/{id}           │ Get specific build details                  │
 │ POST   /api/webhook/github-actions│ GitHub Actions webhook handler              │
-│ POST   /api/webhook/jenkins       │ Jenkins webhook handler                     │
 │ POST   /api/alert/test            │ Test alert delivery                         │
 │ GET    /api/alerts                │ Alert history                               │
 │ POST   /api/alerts/configure      │ Configure alert settings                    │

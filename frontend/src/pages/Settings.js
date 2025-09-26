@@ -33,16 +33,6 @@ const Settings = () => {
       url: `${window.location.origin}/api/v1/webhooks/github`,
       description: 'Configure this URL as a webhook in your GitHub repository settings',
     },
-    {
-      name: 'Jenkins',
-      url: `${window.location.origin}/api/v1/webhooks/jenkins`,
-      description: 'Configure this URL in your Jenkins job post-build actions',
-    },
-    {
-      name: 'GitLab CI',
-      url: `${window.location.origin}/api/v1/webhooks/gitlab`,
-      description: 'Configure this URL in your GitLab project webhook settings',
-    },
   ];
 
   return (

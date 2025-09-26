@@ -7,7 +7,7 @@ const Joi = require('joi');
 const projectSchema = Joi.object({
   name: Joi.string().required().min(1).max(255),
   repository_url: Joi.string().uri().optional(),
-  ci_system: Joi.string().valid('github', 'jenkins', 'gitlab').required(),
+  ci_system: Joi.string().valid('github').required(),
   webhook_secret: Joi.string().optional(),
   api_token_encrypted: Joi.string().optional()
 });
@@ -15,7 +15,7 @@ const projectSchema = Joi.object({
 const updateProjectSchema = Joi.object({
   name: Joi.string().min(1).max(255),
   repository_url: Joi.string().uri().allow(''),
-  ci_system: Joi.string().valid('github', 'jenkins', 'gitlab'),
+  ci_system: Joi.string().valid('github'),
   webhook_secret: Joi.string().allow(''),
   api_token_encrypted: Joi.string().allow(''),
   is_active: Joi.boolean()

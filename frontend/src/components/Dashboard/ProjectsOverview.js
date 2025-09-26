@@ -14,7 +14,6 @@ import {
 import {
   GitHub as GitHubIcon,
   Build as BuildIcon,
-  CloudQueue as JenkinsIcon,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -35,10 +34,6 @@ const ProjectsOverview = ({ data }) => {
     switch (ciSystem) {
       case 'github':
         return <GitHubIcon />;
-      case 'jenkins':
-        return <JenkinsIcon />;
-      case 'gitlab':
-        return <BuildIcon />;
       default:
         return <BuildIcon />;
     }
@@ -48,10 +43,6 @@ const ProjectsOverview = ({ data }) => {
     switch (ciSystem) {
       case 'github':
         return '#333';
-      case 'jenkins':
-        return '#D33833';
-      case 'gitlab':
-        return '#FC6D26';
       default:
         return '#666';
     }

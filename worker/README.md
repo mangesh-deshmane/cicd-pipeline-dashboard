@@ -5,7 +5,6 @@ Background worker service that polls CI/CD providers and updates the dashboard v
 ## Features
 
 - **GitHub Actions Polling**: Polls recent workflow runs via REST API
-- **Jenkins Polling**: Queries Jenkins API for recent builds
 - **Configurable Polling**: Environment-based provider enabling
 - **Thundering Herd Protection**: Jitter to avoid synchronized polling
 - **Robust Error Handling**: Continues operation on individual failures
@@ -16,7 +15,7 @@ Background worker service that polls CI/CD providers and updates the dashboard v
 ### Prerequisites
 
 - Python 3.9+
-- Access to CI/CD providers (GitHub, Jenkins)
+- Access to GitHub Actions
 - Dashboard API running
 
 ### Installation
@@ -48,7 +47,6 @@ Background worker service that polls CI/CD providers and updates the dashboard v
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `ENABLE_GH` | Enable GitHub Actions polling | `true` |
-| `ENABLE_JENKINS` | Enable Jenkins polling | `false` |
 | `WORKER_POLL_INTERVAL` | Polling interval in seconds | `60` |
 | `WORKER_JITTER_SECONDS` | Jitter to avoid thundering herd | `10` |
 
@@ -63,17 +61,6 @@ Background worker service that polls CI/CD providers and updates the dashboard v
 
 *If `GITHUB_REPOS` is not set, falls back to `GITHUB_OWNER`/`GITHUB_REPO`
 
-#### Jenkins Configuration
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `JENKINS_URL` | Jenkins server URL | Yes |
-| `JENKINS_USERNAME` | Jenkins username | Yes |
-| `JENKINS_API_TOKEN` | Jenkins API token | Yes |
-| `JENKINS_JOBS` | Comma-separated job names | No* |
-| `JENKINS_DEFAULT_JOB` | Default Jenkins job | No* |
-
-*If `JENKINS_JOBS` is not set, falls back to `JENKINS_DEFAULT_JOB`
 
 #### Dashboard API Configuration
 
@@ -87,7 +74,6 @@ Background worker service that polls CI/CD providers and updates the dashboard v
 ```bash
 # Enable providers
 ENABLE_GH=true
-ENABLE_JENKINS=false
 
 # Polling configuration
 WORKER_POLL_INTERVAL=60
@@ -96,12 +82,6 @@ WORKER_JITTER_SECONDS=10
 # GitHub Actions
 GITHUB_TOKEN=ghp_your_token_here
 GITHUB_REPOS=myorg/frontend-app,myorg/backend-api,myorg/infrastructure
-
-# Jenkins (if enabled)
-JENKINS_URL=http://jenkins.company.com
-JENKINS_USERNAME=jenkins-user
-JENKINS_API_TOKEN=your_api_token
-JENKINS_JOBS=myapp-pipeline,database-migrations
 
 # Dashboard API
 DASHBOARD_API_URL=http://localhost:8000
@@ -131,12 +111,6 @@ DASHBOARD_API_KEY=your-secure-api-key
 - Gets workflow runs from last 24 hours
 - Maps to webhook payload format
 - Sends via `/api/webhook/github-actions`
-
-#### Jenkins
-- Queries `/job/{job_name}/api/json` for job info
-- Gets detailed build info from `/job/{job_name}/{build_number}/api/json`
-- Maps to webhook payload format
-- Sends via `/api/webhook/jenkins`
 
 ## Usage
 

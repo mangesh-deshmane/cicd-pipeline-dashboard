@@ -26,7 +26,6 @@ import {
   Visibility as VisibilityIcon,
   GitHub as GitHubIcon,
   Build as BuildIcon,
-  CloudQueue as JenkinsIcon,
 } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -155,10 +154,6 @@ const Projects = () => {
     switch (ciSystem) {
       case 'github':
         return <GitHubIcon />;
-      case 'jenkins':
-        return <JenkinsIcon />;
-      case 'gitlab':
-        return <BuildIcon />;
       default:
         return <BuildIcon />;
     }
@@ -168,10 +163,6 @@ const Projects = () => {
     switch (ciSystem) {
       case 'github':
         return 'primary';
-      case 'jenkins':
-        return 'error';
-      case 'gitlab':
-        return 'warning';
       default:
         return 'default';
     }
@@ -384,8 +375,6 @@ const Projects = () => {
               required
             >
               <MenuItem value="github">GitHub Actions</MenuItem>
-              <MenuItem value="jenkins">Jenkins</MenuItem>
-              <MenuItem value="gitlab">GitLab CI</MenuItem>
             </TextField>
             <TextField
               label="Webhook Secret"

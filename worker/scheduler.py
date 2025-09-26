@@ -9,15 +9,10 @@ and updates the dashboard via API calls.
 
 Environment variables:
 - ENABLE_GH: Enable GitHub Actions polling (default: true)
-- ENABLE_JENKINS: Enable Jenkins polling (default: false)
 - WORKER_POLL_INTERVAL: Polling interval in seconds (default: 60)
 - WORKER_JITTER_SECONDS: Jitter to avoid thundering herd (default: 10)
 - GITHUB_TOKEN: GitHub personal access token
 - GITHUB_REPOS: Comma-separated list of owner/repo pairs
-- JENKINS_URL: Jenkins server URL
-- JENKINS_USERNAME: Jenkins username
-- JENKINS_API_TOKEN: Jenkins API token
-- JENKINS_JOBS: Comma-separated list of job names
 - DASHBOARD_API_URL: Dashboard API base URL (default: http://localhost:8000)
 - DASHBOARD_API_KEY: Dashboard API write key
 """
@@ -55,7 +50,6 @@ class WorkerScheduler:
         # Configuration from environment
         self.poll_interval = int(os.getenv("WORKER_POLL_INTERVAL", "60"))  # seconds
         self.enable_github = os.getenv("ENABLE_GH", "true").lower() == "true"
-        self.enable_jenkins = os.getenv("ENABLE_JENKINS", "false").lower() == "true"
         self.jitter_seconds = int(os.getenv("WORKER_JITTER_SECONDS", "10"))  # jitter to avoid thundering herd
         
         # Add event listeners
@@ -70,7 +64,6 @@ class WorkerScheduler:
         logger.info("Starting CI/CD Worker Scheduler")
         logger.info(f"Poll interval: {self.poll_interval} seconds")
         logger.info(f"GitHub Actions enabled: {self.enable_github}")
-        logger.info(f"Jenkins enabled: {self.enable_jenkins}")
         logger.info(f"Jitter: {self.jitter_seconds} seconds")
         
         try:
@@ -145,8 +138,8 @@ class WorkerScheduler:
             logger.info("Executing polling cycle")
             
             # Check if providers are enabled
-            if not self.enable_github and not self.enable_jenkins:
-                logger.warning("No providers enabled, skipping polling cycle")
+            if not self.enable_github:
+                logger.warning("GitHub Actions not enabled, skipping polling cycle")
                 return
             
             # Execute the polling

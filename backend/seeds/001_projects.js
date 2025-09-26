@@ -25,14 +25,6 @@ exports.seed = async function(knex) {
       webhook_secret: 'secret456',
       is_active: true
     },
-    {
-      id: 3,
-      name: 'mobile-app',
-      repository_url: 'https://github.com/company/mobile-app',
-      ci_system: 'jenkins',
-      webhook_secret: 'secret789',
-      is_active: true
-    }
   ]);
 
   // Insert sample pipeline executions
@@ -40,7 +32,7 @@ exports.seed = async function(knex) {
   const executions = [];
   
   for (let i = 0; i < 50; i++) {
-    const projectId = Math.floor(Math.random() * 3) + 1;
+    const projectId = Math.floor(Math.random() * 2) + 1;
     const status = Math.random() > 0.2 ? 'success' : 'failure';
     const duration = Math.floor(Math.random() * 600) + 60; // 1-10 minutes
     const startTime = new Date(now.getTime() - (i * 2 * 60 * 60 * 1000)); // Every 2 hours back
