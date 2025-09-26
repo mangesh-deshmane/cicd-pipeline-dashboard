@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Pipeline Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 CI/CD Pipeline Dashboard</h1>
+            <p class="subtitle">Monitor your GitHub Actions in real-time</p>
+        </header>
+
+        <!-- Latest Commit Status Section -->
+        <div class="latest-commit-section">
+            <div class="commit-header">
+                <h2>🚀 Latest Commit Status</h2>
+                <div class="commit-status-badge" id="latest-commit-status">Loading...</div>
+            </div>
+            <div class="commit-details">
+                <div class="commit-info">
+                    <div class="commit-item">
+                        <span class="commit-label">📦 Build:</span>
+                        <span id="latest-build-id">#---</span>
+                    </div>
+                    <div class="commit-item">
+                        <span class="commit-label">🌿 Branch:</span>
+                        <span id="latest-branch">---</span>
+                    </div>
+                    <div class="commit-item">
+                        <span class="commit-label">🔗 Commit:</span>
+                        <span id="latest-commit-sha">---</span>
+                    </div>
+                    <div class="commit-item">
+                        <span class="commit-label">👤 Author:</span>
+                        <span id="latest-triggered-by">---</span>
+                    </div>
+                </div>
+                <div class="commit-timing">
+                    <div class="commit-item">
+                        <span class="commit-label">⏰ Started:</span>
+                        <span id="latest-started-at">---</span>
+                    </div>
+                    <div class="commit-item">
+                        <span class="commit-label">⚡ Duration:</span>
+                        <span id="latest-duration">---</span>
+                    </div>
+                    <div class="commit-item">
+                        <span class="commit-label">🔗 View:</span>
+                        <a id="latest-build-url" href="#" target="_blank" class="build-link">GitHub Action</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="label">Status:</span>
+                <span id="connection-status" class="status-indicator">Connecting...</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Last Updated:</span>
+                <span id="last-updated">Never</span>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>Success Rate</h3>
+                <div class="metric-value" id="success-rate">--</div>
+            </div>
+            <div class="metric-card">
+                <h3>Total Builds</h3>
+                <div class="metric-value" id="total-builds">--</div>
+            </div>
+            <div class="metric-card">
+                <h3>Avg Build Time</h3>
+                <div class="metric-value" id="avg-build-time">--</div>
+            </div>
+            <div class="metric-card">
+                <h3>Last Build</h3>
+                <div class="metric-value" id="last-build-status">--</div>
+            </div>
+        </div>
+
+        <div class="builds-section">
+            <div class="section-header">
+                <h2>Recent Builds</h2>
+                <button id="refresh-btn" class="btn-refresh">🔄 Refresh</button>
+            </div>
+            <div id="builds-container">
+                <div class="loading">Loading builds...</div>
+            </div>
+        </div>
+
+        <div class="webhook-info">
+            <h3>🔗 Webhook Configuration</h3>
+            <div class="webhook-config">
+                <div class="config-item">
+                    <strong>URL:</strong> 
+                    <code id="webhook-url">Loading...</code>
+                    <button id="copy-url" class="btn-copy">📋</button>
+                </div>
+                <div class="config-item">
+                    <strong>Method:</strong> <code>POST</code>
+                </div>
+                <div class="config-item">
+                    <strong>Content-Type:</strong> <code>application/json</code>
+                </div>
+                <div class="config-item">
+                    <strong>Auth:</strong> <code>Bearer [configured]</code>
+                </div>
+            </div>
+            <p class="webhook-note">
+                Configure this webhook in your GitHub repository settings to enable real-time updates.
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

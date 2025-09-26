@@ -1,0 +1,62 @@
+# Example Terraform Variables File
+# Copy this file to terraform.tfvars and customize the values
+
+# AWS Configuration
+aws_region  = "us-east-1"
+environment = "dev"
+
+# Project Configuration
+project_name = "cicd-pipeline-dashboard"
+
+# Network Configuration
+vpc_cidr               = "10.0.0.0/16"
+public_subnet_cidrs    = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs   = ["10.0.10.0/24", "10.0.20.0/24"]
+
+# Database Configuration
+db_name               = "cicd_dashboard"
+db_username           = "cicd_user"
+db_instance_class     = "db.t3.micro"
+db_allocated_storage  = 20
+db_max_allocated_storage = 100
+db_engine_version     = "15.4"
+
+# ECS Configuration
+ecs_task_cpu              = 512
+ecs_task_memory           = 1024
+ecs_service_desired_count = 2
+
+# Auto Scaling Configuration
+ecs_autoscaling_min_capacity = 1
+ecs_autoscaling_max_capacity = 10
+
+# Application Configuration
+# ECR repository URL (leave empty to create new repository)
+ecr_repository_url = ""
+app_image_tag      = "latest"
+create_ecr_repository = true
+
+# Secrets Configuration (IMPORTANT: Set these values)
+# slack_webhook_url = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+# smtp_password     = "your-smtp-password"
+# write_key         = "your-secure-write-key-for-webhooks"
+
+# Domain Configuration (Optional - for custom domain)
+# domain_name     = "dashboard.yourdomain.com"
+# certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012"
+
+# Monitoring Configuration
+enable_container_insights = true
+log_retention_days       = 30
+
+# Backup Configuration
+db_backup_retention_period = 7
+db_backup_window          = "03:00-04:00"
+db_maintenance_window     = "sun:04:00-sun:05:00"
+
+# Additional Tags
+additional_tags = {
+  Owner       = "DevOps Team"
+  CostCenter  = "Engineering"
+  Project     = "CI/CD Monitoring"
+}
